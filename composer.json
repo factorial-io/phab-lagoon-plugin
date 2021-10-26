@@ -1,0 +1,19 @@
+{
+    "name": "factorial-io/phab-lagoon-plugin",
+    "type": "library",
+    "require-dev": {
+        "factorial-io/phabalicious": "dev-feature/command-plugins"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phabalicious\\CustomPlugin\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Stephan Huber",
+            "email": "stephan@factorial.io"
+        }
+    ],
+    "require": {}
+}
