@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "20d9611f0c1fd3a77cd9550f6fe84f07",
+    "content-hash": "f004605858b3bf5801648693acb213f4",
     "packages": [],
     "packages-dev": [
         {
@@ -166,16 +166,16 @@
         },
         {
             "name": "factorial-io/phabalicious",
-            "version": "dev-feature/command-plugins",
+            "version": "dev-3.7.0-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/factorial-io/phabalicious.git",
-                "reference": "190514320a257a54440dc20eaa80b14d3d86d05b"
+                "reference": "ac172b7eb7ec8b1a0ca2cc407ace67074c641fb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/factorial-io/phabalicious/zipball/190514320a257a54440dc20eaa80b14d3d86d05b",
-                "reference": "190514320a257a54440dc20eaa80b14d3d86d05b",
+                "url": "https://api.github.com/repos/factorial-io/phabalicious/zipball/ac172b7eb7ec8b1a0ca2cc407ace67074c641fb1",
+                "reference": "ac172b7eb7ec8b1a0ca2cc407ace67074c641fb1",
                 "shasum": ""
             },
             "require": {
@@ -262,9 +262,9 @@
             "description": "A deployment helper cli",
             "support": {
                 "issues": "https://github.com/factorial-io/phabalicious/issues",
-                "source": "https://github.com/factorial-io/phabalicious/tree/feature/command-plugins"
+                "source": "https://github.com/factorial-io/phabalicious/tree/3.7.0-beta"
             },
-            "time": "2021-10-26T16:20:57+00:00"
+            "time": "2021-10-27T11:42:19+00:00"
         },
         {
             "name": "graze/data-structure",

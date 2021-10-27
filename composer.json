@@ -1,9 +1,6 @@
 {
     "name": "factorial-io/phab-lagoon-plugin",
     "type": "library",
-    "require-dev": {
-        "factorial-io/phabalicious": "dev-feature/command-plugins"
-    },
     "autoload": {
         "psr-4": {
             "Phabalicious\\CustomPlugin\\": "src/"
@@ -15,5 +12,7 @@
             "email": "stephan@factorial.io"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "factorial-io/phabalicious": "dev-3.7.0-beta"
+    }
 }
