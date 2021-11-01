@@ -133,7 +133,18 @@ class PhabLagoonCommand extends BaseOptionsCommand
           for ($k = 0; $k < min(count($items->data) - 1, $num_rows); $k++) {
             $item = $items->data[$k];
             $rows[] = $this->formatRow([
-              $host->getConfigName(),
+              sprintf(
+                '<href=%s>%s (%s)</>',
+                sprintf(
+                  'https://dashboard.amazeeio.cloud/projects/%s/%s-%s/deployments/%s',
+                  $lagoon_config['project'],
+                  $lagoon_config['project'],
+                  $host['branch'],
+                  $item->name
+                ),
+                $host->getConfigName(),
+                $item->name
+              ),
               $host['branch'],
               $item->created,
               $item->completed,
