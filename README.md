@@ -10,11 +10,11 @@ You need to install the lagoon cli from [here](https://github.com/uselagoon/lago
 
 ### Show the latest deployments
 
-The command `latest-deployments` will list the latest deployments for a specific configuration or for all lagoon-based configurations:
+The command `latest:deployments` will list the latest deployments for a specific configuration or for all lagoon-based configurations:
 
 ```shell
-phab latest-deployments
-phab latest-deployments --config my-config
+phab latest:deployments
+phab latest:deployments --config my-config
 ```
 
 You need to provide the name of the lagoon project via:
