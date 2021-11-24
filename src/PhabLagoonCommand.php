@@ -3,6 +3,7 @@
 namespace Phabalicious\CustomPlugin;
 
 use Phabalicious\Command\BaseOptionsCommand;
+use Phabalicious\Configuration\ConfigurationService;
 use Phabalicious\Configuration\HostConfig;
 use Phabalicious\Method\TaskContextInterface;
 use Phabalicious\ShellProvider\LocalShellProvider;
@@ -98,12 +99,7 @@ class PhabLagoonCommand extends BaseOptionsCommand
 
       $data = [];
       $configuration_service = $context->getConfigurationService();
-      $shell = new LocalShellProvider($configuration_service->getLogger());
-      $host_config =new HostConfig([
-        'shellExecutable' => '/bin/sh',
-        'rootFolder' => $configuration_service->getFabfilePath(),
-      ], $shell, $configuration_service);
-
+      $shell = $this->createLocalShell($configuration_service);
 
       $context->io()->progressStart(count($hosts));
       foreach ($hosts as $host) {
@@ -191,11 +187,7 @@ class PhabLagoonCommand extends BaseOptionsCommand
   public function deployLatest(HostConfig $host_config, TaskContextInterface $context)
   {
     $configuration_service = $context->getConfigurationService();
-    $shell = new LocalShellProvider($configuration_service->getLogger());
-    $shell_host_config =new HostConfig([
-      'shellExecutable' => '/bin/sh',
-      'rootFolder' => $configuration_service->getFabfilePath(),
-    ], $shell, $configuration_service);
+    $shell = $this->createLocalShell($configuration_service);
     $lagoon_config = $host_config['lagoon'];
     if (empty($lagoon_config)) {
       throw new \RuntimeException('Missing lagoon configuration');
@@ -212,9 +204,28 @@ class PhabLagoonCommand extends BaseOptionsCommand
       ]);
 
     $result = $shell->run(implode(' ', $cmd), true, true);
-    $output = implode("\n", $result->getOutput());
-    $json = json_decode($output);
-    print_r($json);
+    if ($result->succeeded()) {
+      $this->printLatestDeployments($context, [ $host_config ], 1);
+      $context->io()->success(sprintf('New deployment triggered for `%s`...', $host_config->getConfigName()));
+    }
+    else {
+      $result->throwException("Could not trigger a new deployment via lagoon");
+    }
   }
+
+  /**
+   * @param \Phabalicious\Configuration\ConfigurationService $configuration_service
+   *
+   * @return \Phabalicious\ShellProvider\LocalShellProvider
+   */
+  protected function createLocalShell(ConfigurationService $configuration_service): LocalShellProvider
+  {
+    $shell = new LocalShellProvider($configuration_service->getLogger());
+    $shell_host_config = new HostConfig([
+      'shellExecutable' => '/bin/sh',
+      'rootFolder' => $configuration_service->getFabfilePath(),
+    ], $shell, $configuration_service);
+    return $shell;
+}
 }
 
