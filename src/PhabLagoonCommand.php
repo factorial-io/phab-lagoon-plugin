@@ -63,6 +63,15 @@ class PhabLagoonCommand extends BaseOptionsCommand
             $this->printLatestDeployments($context, $hosts, count($hosts) == 1 ? 10 : 3);
             break;
 
+          case 'deploy':
+          case 'deploy:latest':
+            if (empty($config_name)) {
+              throw new \RuntimeException('Please privide a configuration you want to deploy');
+            }
+            $host_config =$context->getConfigurationService()->getHostConfig($config_name);
+            $this->deployLatest($host_config, $context);
+            break;
+
           default:
             $context->io()
               ->error(sprintf('Unknown subcommand `%s`', $subcommand));
@@ -179,4 +188,33 @@ class PhabLagoonCommand extends BaseOptionsCommand
     return $hosts;
   }
 
+  public function deployLatest(HostConfig $host_config, TaskContextInterface $context)
+  {
+    $configuration_service = $context->getConfigurationService();
+    $shell = new LocalShellProvider($configuration_service->getLogger());
+    $shell_host_config =new HostConfig([
+      'shellExecutable' => '/bin/sh',
+      'rootFolder' => $configuration_service->getFabfilePath(),
+    ], $shell, $configuration_service);
+    $lagoon_config = $host_config['lagoon'];
+    if (empty($lagoon_config)) {
+      throw new \RuntimeException('Missing lagoon configuration');
+    }
+    $cmd = $this->getLagoonCmd($context, [
+      'deploy',
+      'latest',
+      '-p',
+      $lagoon_config['project'],
+      '-e',
+      $host_config['branch'],
+      '--force',
+      '--output-json'
+      ]);
+
+    $result = $shell->run(implode(' ', $cmd), true, true);
+    $output = implode("\n", $result->getOutput());
+    $json = json_decode($output);
+    print_r($json);
+  }
 }
+
