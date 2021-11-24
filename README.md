@@ -36,8 +36,8 @@ lagoonOptions:
 The command `list:deployments` will list the latest deployments for a specific configuration or for all lagoon-based configurations:
 
 ```shell
-phab list:deployments
-phab list:deployments --config my-config
+phab lagoon list:deployments
+phab lagoon list:deployments --config my-config
 ```
 
 ### Trigger a new deployment
@@ -45,5 +45,5 @@ phab list:deployments --config my-config
 The command `deploy:latest` will trigger a new deployent for a given configuration and print out the new deployment similar to `latest:deployments`
 
 ```shell
-phab -cmyconfig deploy:latest
+phab -cmyconfig lagoon deploy:latest
 ```
