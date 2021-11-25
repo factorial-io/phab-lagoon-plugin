@@ -33,6 +33,50 @@ class PhabLagoonCommand extends BaseOptionsCommand
         'Which host-config should be worked on',
         false
       );
+      $this->setHelp("
+Provides integration with the lagoon cli command. You might need to login 
+into the lagoon cluster via `lagoon login` before running any of these commands. 
+
+<options=bold>Configuration:</>
+
+Please add the name of the lagoon project to the host-configuration, so that 
+the lagoon command can pick it up:
+
+    hosts:
+      example:
+        lagoon:
+          project: my-lagoon-project
+        ...
+    
+If you need to pass additional arguments to the lagoon cli command you can add them
+via the global `lagoonOptions` in your fabfile. 
+
+    lagoonOptions:
+      - -i
+      - /path/to/my/private/key
+  
+<options=bold>Available subcommands:</>
+
+* <options=underscore>list:deployments</>
+  Get a list of the latest deployments for a given configuration and show 
+  them in a table with their respective status. If your terminal supports
+  urls the configuration name is also a link to the laggon ui page for
+  that deployment. If the `--config` argument is omitted then all lagoon-
+  instances are reported.
+  
+  Examples:
+  <info>phab lagoon list:deployments</info>
+  <info>phab lagoon list:deployments --config my-lagoon-config</info>
+
+* <options=underscore>deploy:latest</>
+  Trigger a new deployment for a given configuration. Shows the newly created
+  deployment similat to `list:deployments`
+  
+  Example:
+  <info>phab lagoon deploy:latest --config <my-lagoon-config></>
+  
+
+      ");
     }
 
   protected function getLagoonCmd(TaskContextInterface $context, $arguments)
