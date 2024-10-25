@@ -6,6 +6,12 @@ A phabalicious plugin to integrate with lagoon cli. The plugin provides a new co
 
 You need to install the lagoon cli from [here](https://github.com/uselagoon/lagoon-cli)
 
+## Installation
+
+```
+composer require --dev factorial-io/phab-lagoon-plugin
+```
+
 ## Needed configuration in the fabfile
 
 You need to provide the name of the lagoon project via:
